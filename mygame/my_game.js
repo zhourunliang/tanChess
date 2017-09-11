@@ -7,7 +7,6 @@ class MyGame {
         this.scene = null
         this.actions = {}
         this.keydowns = {}
-        this.mouses = {}
         this.canvas = document.querySelector('#id-canvas')
         this.context = this.canvas.getContext('2d')
         // events
@@ -17,15 +16,6 @@ class MyGame {
         })
         window.addEventListener('keyup', function(event){
             self.keydowns[event.key] = 'up'
-        })
-        window.addEventListener('mousedown', event => {
-            this.mouses['mouse'] = event
-        })
-        window.addEventListener('mousemove', function(event){
-            self.mouses['mouse'] = event
-        })
-        window.addEventListener('mouseup', function(event){
-            self.mouses['mouse'] = event
         })
         this.init()
     }
@@ -71,14 +61,6 @@ class MyGame {
                 g.keydowns[key] = null
             }
         }
-        for (var i = 0; i < actions.length; i++) {
-            // 鼠标
-            var key = actions[i]
-            var status = g.mouses[key]
-            g.actions[key](status)
-            // log(status)
-        }
-
         // update
         g.update()
         // clear

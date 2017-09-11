@@ -1,12 +1,18 @@
 class Scene extends MyScene {
   constructor(game) {
       super(game)
+      this.game=game
       // bg
       var bg = MyImage.new(game,'bg')
       this.addElement(bg)
+      // log(bg)
+
       // chess
       this.chess = Chess.new(game)
+      this.chess.x = 215
+      this.chess.y = 405
       // log(this.chess)
+
       this.addElement(this.chess)
 
       // //加入水管
@@ -50,12 +56,17 @@ class Scene extends MyScene {
   }
   setupInputs(){
     var self = this
-    var c = this.chess
-    this.game.registerAction('mouse',function(event) {
-      // log('event',event)
-      log(c)
-      // c.drag(event)
-    })
+    var c = self.chess
+    c.drag(this.game)
+
+
+    // this.game.registerAction('mouse',function(event) {
+    //   // log('event',event)
+    //   if (typeof(event) != 'undefined') {
+    //     c.drag(event)
+    //   }
+      // log(c)
+    // })
     // this.game.registerAction('d',function(keyStatus) {
     //   b.move(self.birdSpeed, keyStatus)
     // })

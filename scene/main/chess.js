@@ -1,10 +1,10 @@
-class Chess {
+class Chess extends MyImage{
   constructor(game) {
-    this.game = game
-    var c = MyImage.new(game,'chess')
-    c.x = 215
-    c.y = 405
-    return c
+    // this.game = game
+    super(game, 'chess')
+    // var c = MyImage.new(game,'chess')
+    // this.c = c
+    // return c
   }
   static new(game){
     return new this(game)
@@ -15,38 +15,40 @@ class Chess {
   }
   update(){
   }
-  draw(){
-
-  }
-
-  drag(event){
-    let enableDrag = false
-    let x = event.offsetX
-    let y = event.offsetY
-    if(event.type='mousedown'){
-        log(x, y, event)
-        // 检查是否点中了 ball
-        if (this.hasPoint(x, y)) {
-            // 设置拖拽状态
-            enableDrag = true
-        }
-    }
-    if(enableDrag){
-        log(x, y, 'drag')
-        this.x = x
-        this.y = y
-    }
-    if(event.type='mouseup'){
-        log(x, y, 'up')
-        enableDrag = false
-    }
-  }
-
-
-
   hasPoint(x, y) {
-    var xIn = x >= c.x && x <= c.x + c.w
-    var yIn = y >= c.y && y <= c.y + c.h
+    var xIn = x >= this.x && x <= this.x + this.w
+    var yIn = y >= this.y && y <= this.y + this.h
     return xIn && yIn
-}
+  }
+  drag(game){
+    // mouse event
+      self = this
+      var enableDrag = false
+      game.canvas.addEventListener('mousedown', function(event) {
+          var x = event.offsetX
+          var y = event.offsetY
+          log(x, y, event)
+          // 检查是否点中了 ball
+          if (self.hasPoint(x, y)) {
+              // 设置拖拽状态
+              enableDrag = true
+          }
+      })
+      game.canvas.addEventListener('mousemove', function(event) {
+          var x = event.offsetX
+          var y = event.offsetY
+          // log(x, y, 'move')
+          if (enableDrag) {
+              log(x, y, 'drag')
+              self.x = x
+              self.y = y
+          }
+      })
+      game.canvas.addEventListener('mouseup', function(event) {
+          var x = event.offsetX
+          var y = event.offsetY
+          log(x, y, 'up')
+          enableDrag = false
+      })
+  }
 }
