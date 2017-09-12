@@ -42,6 +42,8 @@ class Scene extends MyScene {
   }
   update(){
     super.update()
+    // var self = this
+    // var c = self.chess
     // //地面移动
     // this.skipCount--
     // var offset = -5
