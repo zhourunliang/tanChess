@@ -1,7 +1,7 @@
 class Chess extends MyImage{
   constructor(game) {
-    // this.game = game
     super(game, 'chess')
+    this.game = game
     this.speedX = 0
     this.speedY = 0
     this.fired = false
@@ -55,6 +55,7 @@ class Chess extends MyImage{
               // log(x, y, 'drag')
               self.x = x - (self.w / 2)
               self.y = y - (self.h / 2)
+              self.drawArc(self.speedVector.x1,self.speedVector.y1,self.x,self.y)
           }
       })
       game.canvas.addEventListener('mouseup', function(event) {
@@ -89,6 +90,24 @@ class Chess extends MyImage{
         self.x += self.speedX
         self.y += self.speedY
     }
-
+  }
+  drawArc(x1,y1,x2,y2){
+    //求中点
+    let x=(x2-x1)/2+x1
+    let y=(y2-y1)/2+y1
+    var deg=Math.atan((x2-x1)/(y2-y1))
+    log('x',x,'y',y,'deg',deg)
+    let context =this.game.context
+    context.beginPath();
+    context.strokeStyle = "yellow";
+    let circle = {
+        x : x,    //圆心的x轴坐标值
+        y : y,    //圆心的y轴坐标值
+        r : 50      //圆的半径
+    };
+    //沿着坐标点(100,100)为圆心、半径为50px的圆的逆时针方向绘制弧线
+    context.arc(circle.x, circle.y, circle.r, deg, Math.PI);
+    //按照指定的路径绘制弧线
+    context.stroke();
   }
 }
