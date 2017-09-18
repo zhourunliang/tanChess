@@ -1,4 +1,4 @@
-class Chess extends MyImage{
+class Enemy extends MyImage{
   constructor(game) {
     super(game, 'chess')
     this.game = game
@@ -11,9 +11,6 @@ class Chess extends MyImage{
       x2:0,
       y2:0,
     }
-    // let c = MyImage.new(game,'chess')
-    // this.c = c
-    // return c
   }
   static new(game){
     return new this(game)
@@ -32,13 +29,13 @@ class Chess extends MyImage{
   }
   drag(game){
     // mouse event
-     log('chess')
+      log('enemy')
       let self = this
       let enableDrag = false
       game.canvas.addEventListener('mousedown', function(event) {
           let x = event.offsetX
           let y = event.offsetY
-          log(x, y, event)
+          log('enemy',x, y, event)
           // 检查是否点中了 ball
           if (self.hasPoint(x, y)) {
               self.fired = false
@@ -56,30 +53,24 @@ class Chess extends MyImage{
               // log(x, y, 'drag')
               self.x = x - (self.w / 2)
               self.y = y - (self.h / 2)
-              self.drawArc(self.speedVector.x1,self.speedVector.y1,self.x,self.y)
-              self.drawLine(self.speedVector.x1,self.speedVector.y1,self.x,self.y)
           }
       })
       game.canvas.addEventListener('mouseup', function(event) {
           let x = event.offsetX
           let y = event.offsetY
-          log(x, y, 'up')
-          if (enableDrag) {
-            self.fired = true
-          }
+          log('enemy',x, y, 'up')
+          // self.fired = true
           enableDrag = false
           self.speedVector.x2 = x
           self.speedVector.y2 = y
       })
   }
-  shot(){
+  shot(speedX,speedY){
     let self = this
     if (self.fired) {
         if((self.speedX == 0) && (self.speedY == 0) ){
-          self.speedX = (self.speedVector.x1 - self.speedVector.x2)/10
-          self.speedY = (self.speedVector.y1 - self.speedVector.y2)/10
-          log('speedX',self.speedX)
-          log('speedY',self.speedY)
+          self.speedX = speedX
+          self.speedY = speedY
         }
         // log('move')
         if (self.x < 0 || self.x > 480 - self.w) {
@@ -95,35 +86,12 @@ class Chess extends MyImage{
         self.y += self.speedY
     }
   }
-  drawArc(x1,y1,x2,y2){
-    //求中点
-    let x=(x2-x1)/2+x1
-    let y=(y2-y1)/2+y1
-    let deg=Math.atan((x2-x1)/(y2-y1))
-    log('x',x,'y',y,'deg',deg)
-    let context =this.game.context
-    context.beginPath();
-    context.strokeStyle = "yellow";
-    let circle = {
-        x : x,    //圆心的x轴坐标值
-        y : y,    //圆心的y轴坐标值
-        r : 50      //圆的半径
-    };
-    //沿着坐标点(100,100)为圆心、半径为50px的圆的逆时针方向绘制弧线
-    context.arc(circle.x, circle.y, circle.r, deg, Math.PI);
-    //按照指定的路径绘制弧线
-    context.stroke();
-  }
-  drawLine(x1,y1,x2,y2){
-    let context =this.game.context
-    context.moveTo(x2,y2)
-    context.lineTo(x1,y1)
-    context.stroke()
-  }
   rebound(){
     log('rebound')
     let self = this
     self.speedX *= -1
     self.speedY *= -1
   }
+
+
 }

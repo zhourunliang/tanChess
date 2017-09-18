@@ -15,6 +15,13 @@ class Scene extends MyScene {
 
       this.addElement(this.chess)
 
+      // enemy
+      this.enemy = Enemy.new(game)
+      this.enemy.x = 215
+      this.enemy.y = 100
+      // log(this.enemy)
+
+      this.addElement(this.enemy)
       // //加入水管
       // this.pipe = Pipes.new(game)
       // this.addElement(this.pipe)
@@ -42,6 +49,15 @@ class Scene extends MyScene {
   }
   update(){
     super.update()
+    var self = this
+    var c = self.chess
+    var e = self.enemy
+    if (rectIntersects(c,e) ||rectIntersects(e,c) ) {
+        log('rectIntersects')
+        e.fired = true
+        e.shot(c.speedX,c.speedY)
+        c.rebound()
+    }
     // var self = this
     // var c = self.chess
     // //地面移动
@@ -60,6 +76,8 @@ class Scene extends MyScene {
     var self = this
     var c = self.chess
     c.drag(this.game)
+    var e = self.enemy
+    e.drag(this.game)
 
 
     // this.game.registerAction('mouse',function(event) {
