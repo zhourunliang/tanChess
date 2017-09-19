@@ -38,6 +38,7 @@ var __main = function() {
         //flappy bird images
         bg: 'img/bg.png',
         chess: 'img/chess.png',
+        enemy: 'img/enemy.png',
     }
     var game = MyGame.instance(30, images, function(g){
         var s = Scene.new(g)

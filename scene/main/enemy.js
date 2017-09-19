@@ -1,6 +1,6 @@
 class Enemy extends MyImage{
   constructor(game) {
-    super(game, 'chess')
+    super(game, 'enemy')
     this.game = game
     this.speedX = 0
     this.speedY = 0
