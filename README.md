@@ -1,1 +1,1 @@
-js游戏
+jsGame
